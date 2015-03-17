@@ -99,3 +99,117 @@ cacheSolve <- function(x, ...) {
   ## the message: "calculating inverse matrix and saving in cache memory" is displayed
   ## the R function solve is used to calculate a matrix inverse
 }
+
+## Applications:
+> source('C:/Users/Ale/Dropbox (Yadlin Family)/Coursera/2 R Programing/Programing Assignment 2/makeCacheMatrix.R')
+> source('C:/Users/Ale/Dropbox (Yadlin Family)/Coursera/2 R Programing/Programing Assignment 2/cacheSolve.R')
+
+> m<-makeCacheMatrix(magic(5)) ##--> magic produces square invertible matrices 
+> m1<-m$getMatrix()
+
+> m2<-m$setInverse(matrix( c(1:35), nrow=7, ncol=5))
+the Inverse matrix you have input has the wrong dimensions
+
+> m2<-m$setInverse(diag(5))
+the inverse matrix you have input is wrong try using m$setInverse(solve(m$getMatrix()))
+
+> m2
+NULL
+
+> cacheSolve(m)
+calculating inverse matrix and saving in cache memory
+             [,1]         [,2]         [,3]         [,4]         [,5]
+[1,]  0.011089744 -0.045000000  0.041538462  0.005000000  0.002756410
+[2,] -0.036987179  0.043461538  0.010769231 -0.006538462  0.004679487
+[3,]  0.036410256  0.003076923  0.003076923  0.003076923 -0.030256410
+[4,]  0.001474359  0.012692308 -0.004615385 -0.037307692  0.043141026
+[5,]  0.003397436  0.001153846 -0.035384615  0.051153846 -0.004935897
+
+> cacheSolve(m)
+getting inverse matrix from cache
+             [,1]         [,2]         [,3]         [,4]         [,5]
+[1,]  0.011089744 -0.045000000  0.041538462  0.005000000  0.002756410
+[2,] -0.036987179  0.043461538  0.010769231 -0.006538462  0.004679487
+[3,]  0.036410256  0.003076923  0.003076923  0.003076923 -0.030256410
+[4,]  0.001474359  0.012692308 -0.004615385 -0.037307692  0.043141026
+[5,]  0.003397436  0.001153846 -0.035384615  0.051153846 -0.004935897
+
+> m2<-cacheSolve(m)
+getting inverse matrix from cache
+
+> m2<-m$setInverse(diag(5))
+the Inverse matrix value in the cache memory is already correct - no changes will be accepted
+you can use x$getInverse to retrieve the correct Inverse matrix value from the Cache
+if you were using x$setInverse(matrix) the correct value will appear below this message
+if you were using M<-x$setInverse(matrix), the correct value will be stored in 'Matrix'
+
+> m$setInverse(diag(5))
+the Inverse matrix value in the cache memory is already correct - no changes will be accepted
+you can use x$getInverse to retrieve the correct Inverse matrix value from the Cache
+if you were using x$setInverse(matrix) the correct value will appear below this message
+if you were using M<-x$setInverse(matrix), the correct value will be stored in 'Matrix'
+             [,1]         [,2]         [,3]         [,4]         [,5]
+[1,]  0.011089744 -0.045000000  0.041538462  0.005000000  0.002756410
+[2,] -0.036987179  0.043461538  0.010769231 -0.006538462  0.004679487
+[3,]  0.036410256  0.003076923  0.003076923  0.003076923 -0.030256410
+[4,]  0.001474359  0.012692308 -0.004615385 -0.037307692  0.043141026
+[5,]  0.003397436  0.001153846 -0.035384615  0.051153846 -0.004935897
+
+> m2
+             [,1]         [,2]         [,3]         [,4]         [,5]
+[1,]  0.011089744 -0.045000000  0.041538462  0.005000000  0.002756410
+[2,] -0.036987179  0.043461538  0.010769231 -0.006538462  0.004679487
+[3,]  0.036410256  0.003076923  0.003076923  0.003076923 -0.030256410
+[4,]  0.001474359  0.012692308 -0.004615385 -0.037307692  0.043141026
+[5,]  0.003397436  0.001153846 -0.035384615  0.051153846 -0.004935897
+
+> m$getMatrix()
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    9    2   25   18   11
+[2,]    3   21   19   12   10
+[3,]   22   20   13    6    4
+[4,]   16   14    7    5   23
+[5,]   15    8    1   24   17
+
+> m$getInverse()
+             [,1]         [,2]         [,3]         [,4]         [,5]
+[1,]  0.011089744 -0.045000000  0.041538462  0.005000000  0.002756410
+[2,] -0.036987179  0.043461538  0.010769231 -0.006538462  0.004679487
+[3,]  0.036410256  0.003076923  0.003076923  0.003076923 -0.030256410
+[4,]  0.001474359  0.012692308 -0.004615385 -0.037307692  0.043141026
+[5,]  0.003397436  0.001153846 -0.035384615  0.051153846 -0.004935897
+
+> m$getMatrix()%*%m$getInverse()
+              [,1]         [,2]          [,3] [,4]          [,5]
+[1,]  1.000000e+00 7.979728e-17 -1.110223e-16    0 -6.938894e-18
+[2,]  3.469447e-17 1.000000e+00  1.110223e-16    0 -7.632783e-17
+[3,] -2.428613e-17 4.943962e-17  1.000000e+00    0  3.469447e-18
+[4,]  5.551115e-17 1.318390e-16  1.110223e-16    1  0.000000e+00
+[5,]  8.326673e-17 1.838807e-16 -3.330669e-16    0  1.000000e+00
+
+> round(m$getMatrix()%*%m$getInverse())
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    0    0    0    0
+[2,]    0    1    0    0    0
+[3,]    0    0    1    0    0
+[4,]    0    0    0    1    0
+[5,]    0    0    0    0    1
+
+> round(m1%*%m2)
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    0    0    0    0
+[2,]    0    1    0    0    0
+[3,]    0    0    1    0    0
+[4,]    0    0    0    1    0
+[5,]    0    0    0    0    1
+
+> cacheSolve(m)
+getting inverse matrix from cache
+             [,1]         [,2]         [,3]         [,4]         [,5]
+[1,]  0.011089744 -0.045000000  0.041538462  0.005000000  0.002756410
+[2,] -0.036987179  0.043461538  0.010769231 -0.006538462  0.004679487
+[3,]  0.036410256  0.003076923  0.003076923  0.003076923 -0.030256410
+[4,]  0.001474359  0.012692308 -0.004615385 -0.037307692  0.043141026
+[5,]  0.003397436  0.001153846 -0.035384615  0.051153846 -0.004935897
+
+# hope this is clear to all readers
